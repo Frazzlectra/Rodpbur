@@ -24,7 +24,7 @@ public class Ground : MonoBehaviour
     {
         if (other.gameObject.tag == "mainSpawnPoint")
         {
-            Debug.Log("Spawn New");
+            //Debug.Log("Spawn New");
             GameManager.instance.SpawnGround();
         }
     }
