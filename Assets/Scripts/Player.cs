@@ -7,7 +7,8 @@ public class Player : MonoBehaviour {
     NavMeshAgent playerNav;
     NavMesh groundNavMesh;
     float moveSpeed = 5;
-    float jumpHight = 15;
+    float jumpHight = 6;
+    bool jumping = false;
 
 
     void Awake()
@@ -17,7 +18,14 @@ public class Player : MonoBehaviour {
     }
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.Space) && !jumping)
+        {
+            playerNav.enabled = false;
+            player.AddRelativeForce(Vector3.up * jumpHight, ForceMode.Impulse);//jump is not consistant
+            jumping = true;
+        }
+        //move left and right
+        else if (Input.GetKey(KeyCode.D))
         {
             player.MovePosition(transform.position +  transform.right * moveSpeed * Time.deltaTime);
         }
@@ -25,17 +33,15 @@ public class Player : MonoBehaviour {
         {
             player.MovePosition(transform.position - transform.right * moveSpeed * Time.deltaTime);
         }
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            playerNav.enabled = false;
-            player.AddRelativeForce(Vector3.up * jumpHight,ForceMode.Impulse);            
-        }
     }
+    
     void OnCollisionEnter(Collision other)
     {
+        //when you hit the ground after jump turn navMeshAgent back on
         if (other.gameObject.tag == "ground")
         {
             playerNav.enabled = true;
+            jumping = false;
         }
     }
 }
