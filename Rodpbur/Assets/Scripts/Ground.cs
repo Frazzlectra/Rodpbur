@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Ground : MonoBehaviour
 {
 
-    public static float moveSpeed = 3;
+    public static float moveSpeed = 3.5f;
     public float timeBetweenIncrease = 10;
     public float increaseMoveSpeed = .5f;
 
@@ -45,7 +45,7 @@ public class Ground : MonoBehaviour
         moveSpeed += increaseMoveSpeed;
         GameManager.coinDelay -= .05f; // so coins don't get farther apart as the ground speeds up
         gameObject.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, moveSpeed);
-        Debug.Log("moveSpeed " + moveSpeed);
+        //Debug.Log("moveSpeed " + moveSpeed);
         return;
     }
 }

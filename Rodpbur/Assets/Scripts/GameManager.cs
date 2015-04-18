@@ -75,7 +75,8 @@ public class GameManager : MonoBehaviour
         }
         if (rnd == 1)
         {
-            SpawnDeathBlocks();
+            rnd = Random.Range(0, 2);
+            SpawnDeathBlocks(rnd);
         }
         if (rnd == 2 && spaceBetweenBerriers > 5)//change 5 to verrialbe
         {
@@ -103,11 +104,10 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    void SpawnDeathBlocks()
+    void SpawnDeathBlocks(int rndPoint)
     {
-        rnd = Random.Range(0, 1);
         //spawn new death block from coin spawnpoint
-        newDeathBlock = Instantiate(deathBlock, coinSpawnPoints[rnd].transform.position, Quaternion.identity) as GameObject;
+        newDeathBlock = Instantiate(deathBlock, coinSpawnPoints[rndPoint].transform.position, Quaternion.identity) as GameObject;
         newDeathBlock.transform.SetParent(newGround.transform);
     }
     void SpawnBerrier()

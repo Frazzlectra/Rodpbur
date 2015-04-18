@@ -4,24 +4,56 @@ using UnityEngine.UI;
 
 public class HudEffects : MonoBehaviour
 {
+    //buttons
+    public Button playBtn;
+    public Button quitBtn;
+    //score && Hud
     public Text scoreText;
-    public Text distanceText;    
+    public Text distanceText;
+    public Text distanceHighText;
     public static int score = 0;
     public static HudEffects instance;
-    public static int health = 200;
+    int startingHealth = 200;
+    public static int health;
 
     Animator anim;
     int distance = 0;
     private float timer;
-
+    int distanceHighScore = 0;
     void Awake ()
-    {        
+    {
+        health = startingHealth;
         anim = GetComponent<Animator>();
         if (instance == null)
         {
             instance = GetComponent<HudEffects>(); 
         }
+        playBtn.onClick.AddListener(() => { ButtonClicked("play"); });
+        quitBtn.onClick.AddListener(() => { ButtonClicked("quit"); });
     }
+
+    private void ButtonClicked(string btn)
+    {
+        score = 0;
+        distance = 0;
+        health = startingHealth;
+        GameManager.GameOver = false;
+        GameManager.coinDelay = 1;
+        Ground.moveSpeed = 3.5f;
+        switch (btn)
+        {
+            case"play":
+                Application.LoadLevel(1);
+                break;
+            case"quit":
+                Application.LoadLevel(0);
+                break;
+            default:
+                Debug.Log("Error in Button Clicked Hud Effects");
+                break;
+        }
+    }
+
     void Update()
     {
         timer += Ground.moveSpeed  * Time.deltaTime;
@@ -37,7 +69,13 @@ public class HudEffects : MonoBehaviour
         }
         scoreText.text = "Gold: " + score;
         distanceText.text = "Distance: " + distance;
+        if (GameManager.GameOver && distance > distanceHighScore)
+        {
+            distanceHighScore = distance;
+            distanceHighText.text = "Greatest Distance: " + distanceHighScore;
+        }
     }
+
     public void takeDamage(GameObject other, int damage)
     {
         anim.SetTrigger("takeDamage");
@@ -48,6 +86,10 @@ public class HudEffects : MonoBehaviour
             return;
         }
         score -= damage;//make this a veriable
+        if (score <= 0)
+        {
+            score = 0;
+        }
     }
     IEnumerator EndGame()
     {
