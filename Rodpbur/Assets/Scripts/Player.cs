@@ -65,6 +65,8 @@ public class Player : MonoBehaviour {
         {
             HudEffects.instance.takeDamage(other.gameObject, 50);
             Destroy(other.gameObject);
+            playerAudio.clip = deathBlock;
+            playerAudio.Play();
             //Debug.Log("barrier");
         }
     }

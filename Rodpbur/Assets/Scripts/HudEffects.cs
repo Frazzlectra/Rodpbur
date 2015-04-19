@@ -19,7 +19,7 @@ public class HudEffects : MonoBehaviour
     Animator anim;
     int distance = 0;
     private float timer;
-    int distanceHighScore = 0;
+    private static int distanceHighScore = 0;
     void Awake ()
     {
         health = startingHealth;
@@ -72,8 +72,9 @@ public class HudEffects : MonoBehaviour
         if (GameManager.GameOver && distance > distanceHighScore)
         {
             distanceHighScore = distance;
-            distanceHighText.text = "Greatest Distance: " + distanceHighScore;
         }
+
+        distanceHighText.text = "Greatest Distance: " + distanceHighScore;
     }
 
     public void takeDamage(GameObject other, int damage)

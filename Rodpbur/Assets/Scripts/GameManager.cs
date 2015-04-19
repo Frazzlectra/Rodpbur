@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     GameObject newCoin;
     GameObject newDeathBlock;
     GameObject newBerrier;
+    Vector3 berrierSpawn;
     bool spawningCoins = false;
     GameObject newGround;
     int spaceBetweenBerriers;
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
         spawnPoint = GameObject.FindGameObjectWithTag("mainSpawnPoint");
         coinSpawnPoints = GameObject.FindGameObjectsWithTag("coinSpawn");
         enviromentSpawnPoints = GameObject.FindGameObjectsWithTag("columnSpawnPoint");
+        berrierSpawn = new Vector3(spawnPoint.transform.position.x, 0.8f, spawnPoint.transform.position.z);
         //Debug.Log("Coin spawn points: " + coinSpawnPoints[0] + " " + coinSpawnPoints[1]);
         groundClones = new GameObject("GroundClones").transform;
     }
@@ -111,9 +113,10 @@ public class GameManager : MonoBehaviour
         newDeathBlock.transform.SetParent(newGround.transform);
     }
     void SpawnBerrier()
-    {
+    {        
         spaceBetweenBerriers = 0;
-        newBerrier = Instantiate(berrier, spawnPoint.transform.position, Quaternion.identity) as GameObject;
+        newBerrier = Instantiate(berrier, berrierSpawn, Quaternion.identity) as GameObject;
         newBerrier.transform.SetParent(newGround.transform);
+        //Debug.Break();
     }
 }

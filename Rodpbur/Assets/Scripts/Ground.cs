@@ -43,7 +43,7 @@ public class Ground : MonoBehaviour
     {
         GameManager.timer = 0;
         moveSpeed += increaseMoveSpeed;
-        GameManager.coinDelay -= .05f; // so coins don't get farther apart as the ground speeds up
+        GameManager.coinDelay -= .01f; // so coins don't get farther apart as the ground speeds up
         gameObject.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, moveSpeed);
         //Debug.Log("moveSpeed " + moveSpeed);
         return;
