@@ -11,12 +11,15 @@ public class HudEffects : MonoBehaviour
     public Text scoreText;
     public Text distanceText;
     public Text distanceHighText;
+    public AudioClip gameOverMusic;
     public static int score = 0;
     public static HudEffects instance;
     int startingHealth = 200;
     public static int health;
 
     Animator anim;
+    GameObject mainCamera;
+    AudioSource backgroundMusic;
     int distance = 0;
     private float timer;
     private static int distanceHighScore = 0;
@@ -30,6 +33,8 @@ public class HudEffects : MonoBehaviour
         }
         playBtn.onClick.AddListener(() => { ButtonClicked("play"); });
         quitBtn.onClick.AddListener(() => { ButtonClicked("quit"); });
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        backgroundMusic = mainCamera.GetComponent<AudioSource>();
     }
 
     private void ButtonClicked(string btn)
@@ -95,6 +100,8 @@ public class HudEffects : MonoBehaviour
     IEnumerator EndGame()
     {
         anim.SetBool("gameOver", true);
+        backgroundMusic.clip = gameOverMusic;
+        backgroundMusic.Play();
         yield return new WaitForSeconds(.13f);
         anim.SetBool("gameOver", false);
     }
